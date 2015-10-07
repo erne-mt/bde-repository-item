@@ -11,6 +11,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="bower_components/polymer/polymer.html">
 <link rel="import" href="bower_components/font-roboto/roboto.html"/>
 
+<!-- paper-elements -->
+<link rel="import" href="bower_components/paper-item/paper-item.html">
+<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+
+<!-- iron-elements -->
+<link rel="import" href="bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="bower_components/iron-icons/iron-icons.html">
+
 <!--
 An element providing a solution to no problem in particular.
 
@@ -32,9 +40,32 @@ Example:
                 box-sizing: border-box;
                 font-family: 'Roboto Mono', 'Consolas', 'Menlo', monospace;
             }
+
+            :host .item {
+                background-color: #fff;
+                margin: 2px;
+                padding: 5px;
+                border: 1px solid #999;
+            }
+
+            :host .collapse-content {
+                margin: 2px;
+                background-color: #f3f3f3;
+                border: 1px solid #999;
+            }
+
         </style>
 
-        <h1>&lt;bde-repository-item&gt;</h1>
+        <paper-item class="item" flex focused="{{focus}}">
+            <h4>[[title]]</h4>
+            <!-- TODO (ene): use more data -->
+            <span class="flex"></span>
+            <!--<paper-icon-button icon="add" on-tap="fireEvent"></paper-icon-button>-->
+        </paper-item>
+
+        <iron-collapse opened="{{open}}">
+            <div class="collapse-content">[[description]]</div>
+        </iron-collapse>
 
     </template>
 
@@ -46,7 +77,32 @@ Example:
 
         is : 'bde-repository-item',
 
-        properties : {}
+        properties : {
+            title : {
+                type: String,
+                value : "bde-repository-item"
+            },
+            description : {
+                type: String,
+                value : "This is a description property of the <bde-repository-item> custom element."
+            },
+            data : {
+                type : Object,
+                value : ""
+            },
+            focus : {
+                type : Boolean,
+                observer : '_focusChanged'
+            },
+            open : {
+                type : Boolean,
+                notify : true
+            }
+        },
+
+        _focusChanged : function(newValue,oldValue){
+            this.open = newValue
+        }
 
     });
 
