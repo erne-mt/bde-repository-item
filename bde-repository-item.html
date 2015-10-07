@@ -13,6 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <!-- paper elements -->
 <link rel="import" href="bower_components/paper-item/paper-item.html">
+<link rel="import" href="bower_components/paper-fab/paper-fab.html">
 
 <!-- iron elements -->
 <link rel="import" href="bower_components/iron-collapse/iron-collapse.html">
@@ -58,11 +59,17 @@ Example:
                 border: 1px solid #999;
             }
 
+            :host .addItemBtn {
+                margin-right: 10px;
+                background-color: #00b99e;
+            }
+
         </style>
 
         <paper-item class="item" flex focused="{{focus}}">
             <h4>[[title]]</h4>
             <span class="flex"></span>
+            <paper-fab class="addItemBtn" mini icon="add" title="Add component" on-tap="fireAddEvent"></paper-fab>
         </paper-item>
 
         <iron-collapse opened="{{open}}">
@@ -92,6 +99,7 @@ Example:
                 type: String,
                 value : "This is a description property of the <bde-repository-item> custom element."
             },
+            // TODO (ene): check if there are data
             data : {
                 type : Object,
                 value : ""
@@ -108,6 +116,10 @@ Example:
 
         _focusChanged : function(newValue,oldValue){
             this.open = newValue
+        },
+
+        fireAddEvent : function(){
+            this.fire('addBaseObject', {baseObject : this.data})
         }
 
     });
