@@ -54,16 +54,21 @@ Example:
                 background-color: #00b99e;
             }
 
+            paper-fab {
+                user-select: none;
+            }
+
         </style>
 
-        <paper-item class="item" flex focused="{{open}}">
+        <paper-item class="item" flex on-tap="handleTap" on-blur="handleBlur">
             <h4>[[title]]</h4>
             <span class="flex"></span>
             <paper-fab class="addItemBtn"
                        mini
                        icon="add"
                        title="Add component"
-                       on-tap="fireAddEvent">
+                       on-tap="fireAddEvent"
+                       on-focus="handleFocus">
             </paper-fab>
             <!-- TODO (ene): seperate paper-fab from focus of paper-item -->
         </paper-item>
@@ -95,7 +100,16 @@ Example:
         },
 
         fireAddEvent : function(evt){
+            evt.stopPropagation();
             this.fire('addBaseObject', {baseObject : this.data})
+        },
+
+        handleBlur: function(evt) {
+            this.open = false;
+        },
+
+        handleTap: function(evt) {
+            this.open =! this.open;
         }
 
     });
