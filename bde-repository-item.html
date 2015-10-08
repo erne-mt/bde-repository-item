@@ -1,12 +1,4 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
+
 <!-- libraries -->
 <link rel="import" href="bower_components/polymer/polymer.html">
 <link rel="import" href="bower_components/font-roboto/roboto.html"/>
@@ -20,16 +12,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="bower_components/iron-icons/iron-icons.html">
 
 <!--
-An element providing a solution to no problem in particular.
+An element providing a collapsible item containing a name and a description, and a button, which fires a data-event
 
 Example:
 
-    <bde-repository-item></bde-repository-item>
+    <bde-repository-item title="myElement" description="This is the myElement description" data={{data}}></bde-repository-item>
 
-@group Seed Elements
 @element bde-repository-item
 @demo demo/index.html
-@hero hero.svg
 -->
 <dom-module id="bde-repository-item">
 
@@ -47,7 +37,7 @@ Example:
                 padding: 5px;
                 border: 1px solid #999;
             }
-            
+
             :host .item h4 {
                 margin-left: 10px;
             }
@@ -60,25 +50,28 @@ Example:
             }
 
             :host .addItemBtn {
-                right: 20px;
-                top: 11%;
+                margin-right: 10px;
                 background-color: #00b99e;
-                position: absolute;
             }
 
         </style>
 
-        <paper-item class="item" flex focused="{{focus}}">
+        <paper-item class="item" flex focused="{{open}}">
             <h4>[[title]]</h4>
             <span class="flex"></span>
+            <paper-fab class="addItemBtn"
+                       mini
+                       icon="add"
+                       title="Add component"
+                       on-tap="fireAddEvent">
+            </paper-fab>
             <!-- TODO (ene): seperate paper-fab from focus of paper-item -->
         </paper-item>
-
-        <paper-fab class="addItemBtn" mini icon="add" title="Add component" on-tap="fireAddEvent"></paper-fab>
 
         <iron-collapse opened="{{open}}">
             <div class="collapse-content">
                 <h5>Description:</h5>
+
                 <p>[[description]]</p>
             </div>
         </iron-collapse>
@@ -94,32 +87,14 @@ Example:
         is : 'bde-repository-item',
 
         properties : {
-            title : {
-                type: String,
-                value : "bde-repository-item"
-            },
+            title : String,
             // TODO (ene): if there is no decription available set "no description for this component"
-            description : {
-                type: String,
-                value : "This is a description property of the <bde-repository-item> custom element."
-            },
-            data : Object
-            ,
-            focus : {
-                type : Boolean,
-                observer : '_focusChanged'
-            },
-            open : {
-                type : Boolean,
-                notify : true
-            }
+            description : String,
+            data : Object,
+            open : Boolean
         },
 
-        _focusChanged : function(newValue,oldValue){
-            this.open = newValue
-        },
-
-        fireAddEvent : function(){
+        fireAddEvent : function(evt){
             this.fire('addBaseObject', {baseObject : this.data})
         }
 
