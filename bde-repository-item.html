@@ -60,8 +60,10 @@ Example:
             }
 
             :host .addItemBtn {
-                margin-right: 10px;
+                right: 20px;
+                top: 11%;
                 background-color: #00b99e;
+                position: absolute;
             }
 
         </style>
@@ -69,9 +71,10 @@ Example:
         <paper-item class="item" flex focused="{{focus}}">
             <h4>[[title]]</h4>
             <span class="flex"></span>
-            <paper-fab class="addItemBtn" mini icon="add" title="Add component" on-tap="fireAddEvent"></paper-fab>
             <!-- TODO (ene): seperate paper-fab from focus of paper-item -->
         </paper-item>
+
+        <paper-fab class="addItemBtn" mini icon="add" title="Add component" on-tap="fireAddEvent"></paper-fab>
 
         <iron-collapse opened="{{open}}">
             <div class="collapse-content">
@@ -100,11 +103,8 @@ Example:
                 type: String,
                 value : "This is a description property of the <bde-repository-item> custom element."
             },
-            // TODO (ene): check if there are data
-            data : {
-                type : Object,
-                value : ""
-            },
+            data : Object
+            ,
             focus : {
                 type : Boolean,
                 observer : '_focusChanged'
