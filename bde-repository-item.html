@@ -1,4 +1,3 @@
-
 <!-- libraries -->
 <link rel="import" href="bower_components/polymer/polymer.html">
 <link rel="import" href="bower_components/font-roboto/roboto.html"/>
@@ -54,10 +53,6 @@ Example:
                 background-color: #00b99e;
             }
 
-            paper-fab {
-                user-select: none;
-            }
-
         </style>
 
         <paper-item class="item" flex on-tap="handleTap" on-blur="handleBlur">
@@ -67,10 +62,8 @@ Example:
                        mini
                        icon="add"
                        title="Add component"
-                       on-tap="fireAddEvent"
-                       on-focus="handleFocus">
+                       on-tap="fireAddEvent">
             </paper-fab>
-            <!-- TODO (ene): seperate paper-fab from focus of paper-item -->
         </paper-item>
 
         <iron-collapse opened="{{open}}">
@@ -93,8 +86,14 @@ Example:
 
         properties : {
             title : String,
-            // TODO (ene): if there is no decription available set "no description for this component"
-            description : String,
+            description : {
+                type : String,
+                value : function(){
+                    if (!this.description) {
+                        return ('No description available')
+                    }
+                }
+            },
             data : Object,
             open : Boolean
         },
@@ -104,12 +103,12 @@ Example:
             this.fire('addBaseObject', {baseObject : this.data})
         },
 
-        handleBlur: function(evt) {
+        handleBlur : function(evt){
             this.open = false;
         },
 
-        handleTap: function(evt) {
-            this.open =! this.open;
+        handleTap : function(evt){
+            this.open = !this.open;
         }
 
     });
