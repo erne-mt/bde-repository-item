@@ -16,6 +16,10 @@
 
     <script>
 
+      document.addEventListener('addBaseObject', function(evt){
+        console.log('>> addBaseObjectEvent data <<', evt.detail.baseObject)
+      });
+
       document.querySelector('bde-repository-item').title = 'bde-repository-item';
       document.querySelector('bde-repository-item').description = 'This is a description property of the <bde-repository-item> custom element.';
       document.querySelector('bde-repository-item').data = {"name" : "test", "value" : "12345"}
